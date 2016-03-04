@@ -1,0 +1,336 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Rent A Flat | A propos</title>
+    
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'/>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'/>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'/>
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/owl.carousel.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/responsive.css"/>
+    
+    <!-- Latest jQuery form server -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    
+    <!-- Bootstrap JS form CDN -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+		<link href="css/style.css" rel="stylesheet" type="text/css"  media="all" />
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+		<link href="css/slider.css" rel="stylesheet" type="text/css"  media="all" />
+		<link rel="stylesheet" type="text/css" href="css/lightbox.css" media="screen" />
+		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1200);
+				});
+			});
+		</script>
+		
+		<script type="text/javascript" src="js/jquery.lightbox.js"></script>
+	    
+	  	<!-- <script type="text/javascript">
+	    $(function() {
+	        $('.gallery-grid a').lightBox();
+	    });
+	    </script>-->
+	    
+	    <!-- DATA TABLES -->
+		<link rel="stylesheet" type="text/css" href="css/jquery-ui.css" />
+		<script type='text/javascript' src='js/jquery-1.11.1.min.js'></script>
+		<script type='text/javascript' src='js/jquery.dataTables.min.js'></script>
+
+	
+  </head>
+  <body>
+   
+    <div class="header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="user-menu">
+                        <ul>
+							<li class="dropdown dropdown-small" 
+                        		th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}">
+								  <span th:case="${false}">
+								  		<a th:href="@{'/register'}"><i class="fa fa-user"></i> Inscription</a>
+								  </span>
+								  <span th:case="${true}" sec:authorize="hasAuthority('ROLE_ADMIN')">
+								  <br/><i class="fa fa-user"></i> Connexion administrateur</span>
+								  <span th:case="${true}" sec:authorize="hasAuthority('ROLE_USER')">
+								  <br/><i class="fa fa-user"></i> Connexion utilisateur</span>
+							</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="header-right">
+                        <ul class="list-unstyled list-inline">
+                        	<li class="dropdown dropdown-small" 
+                        		th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}">
+								  <span th:case="${false}">
+								  	<a th:href="@{'/login'}">
+								  		<i class="fa fa-user"></i> Connexion
+								  	</a>
+								  </span>
+								  <p th:case="${true}">
+									  <form th:action="@{/logout}" method="post">
+									  	<span th:inline="text" sec:authorize="isAuthenticated()">
+											Bonjour [[${#httpServletRequest.remoteUser}]]! 
+				                		</span>
+									    <input type="hidden" th:name="${_csrf.parameterName}"
+											   th:value="${_csrf.token}" />
+							            <input type="submit" value="Déconnexion"/>
+							          </form>
+						          </p>
+								  <span th:case="*">Should never happen, but who knows...</span>
+							</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End header area -->
+    
+    <div class="site-branding-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="logo">
+                        <h1><a href="index.html">Rent <span>A Flat</span></a></h1>
+                    </div>
+                </div>
+                
+                <div class="col-sm-6">
+                    
+                </div>
+            </div>
+        </div>
+    </div> <!-- End site branding area -->
+    
+    <div class="mainmenu-area">
+        <div class="container">
+            <div class="row">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div> 
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a th:href="@{'/index'}">Accueil</a></li>
+						<li class="active"><a th:href="@{'/apropos'}">A propos</a></li>
+						<li><a th:href="@{'/proposerlog'}">Déposer une annonce</a></li>
+						<li><a th:href="@{'/location'}">Nos produits à la location</a></li>
+						<li><a th:href="@{'/contact'}">Contact</a></li>
+						<li sec:authorize="isAuthenticated()">
+							<a th:href="@{'/espacemembre'}" sec:authorize="hasAuthority('ROLE_USER')">Espace membre</a>
+							<a th:href="@{'/espaceadmin'}" sec:authorize="hasAuthority('ROLE_ADMIN')">Espace admin</a>
+						</li>
+                    </ul>
+                </div>  
+            </div>
+        </div>
+    </div> <!-- End mainmenu area -->
+    
+   <div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>A propos</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+				<h3>Nos conditions</h3>
+				<p>
+					• Adresse du local donné en location N° : 15 Rue : Chemin des îles Commune : Antibes-Juan les Pins Etage : 6 ème.
+					• Consistance du local donné en location Studio 31,33 m²
+					• Désignation du local - Composition du local : 1 salle de bain, 1 WC. Cuisine et Salon jumellé, petite terrasse - Annexes dont le locataire a la jouissance exclusive : Emplacement parking privatif. -Equipements existants dans les parties communes : Ascenseur - Nombre de couchages maximum : 4 personnes.
+					• Piscine enterrée et de plein air : Néant
+					• Etat des lieux Un état des lieux contradictoire sera établi lors de la remise des clés au locataire et lors de la restitution de celles-ci. L’état des lieux sera obligatoirement annexé au présent contrat.
+					• Inventaire Un inventaire contradictoire sera établi le jour de l’entrée dans les lieux du preneur et il sera annexé au présent contrat. A l’expiration de la location, cette annexe sera à nouveau vérifiée et signée par les deux parties.
+					• Durée de la location En aucun cas elle ne pourra être prorogée, sauf accord préalable et écrit du bailleur ou L’interlocuteur. Le contrat initial ou le contrat prorogé ne pourront porter la durée de la location à plus de quatre-vingt-dix jours maximum. Pour la prise de possession des lieux et les formalités d'usage (état des lieux, inventaire, remise des clefs, Prévues à cette date). Ces rendez-vous pourront être modifiés en cas de force majeure et à condition que les deux parties en soient dûment informées.
+					• Loyer/charges La présente location est consentie et acceptée moyennant le prix et de l’acceptation sur le site LOCASEJOURS.COM
+					• Dépôt de garantie A titre de dépôt de garantie et en cautionnement des dégâts qui pourraient être causés au local ou bien au mobilier et/ou aux objets Garnissant les lieux, le preneur versera, la somme de : Cinq cents Euro. Cette somme, non productive d'intérêts, sera restituée dès la preuve faite par le preneur que : 
+					- l'ensemble des consommations qu'il devait acquitter et dont la liste figure au paragraphe précédent a bien été intégralement acquitté. 
+					- aucun meuble, objet ou linge n'est absent, dégradé ni sali, ou bien, si tel est le cas, sa remise en état ou son remplacement par l'identique est convenu avec le bailleur qui l'a accepté. - les lieux n'ont subi aucune dégradation et sont remis en état propre (placards, poubelles et réfrigérateurs vides de déchets, sanitaires, appareils électroménagers, vaisselle, etc.). Si ce dépôt de garantie s'avérait insuffisant, le preneur s'engage d'ores et déjà à en parfaire la somme.
+					• Assurance Le preneur s’engage à s’assurer contre les risques locatifs (incendie, dégât des eaux) et à produire, le jour de l'entrée dans les lieux, un exemplaire ou une photocopie de la police d'assurance acquittée auprès d'une compagnie notoirement solvable. Le défaut d'assurance, en cas de sinistre, donnera lieu à des dommages et intérêts. A présenter lors de votre arrivée.
+					• Echéancier de paiement Il devra être envoyé à l’interlocuteur avec le Contrat de location saisonnier 30% d’acompte de réservation à encaissement immédiat avec la caution + ménage soit plus 560 €uro + Le 5 Euro pour le WIFI.
+					- Un mois avant le début de la location faire parvenir le reste du pour validé la location. Si non : Nul.
+					• Obligations du Preneur : 
+					- La présente location est faite aux charges et conditions habituelles et de droit en pareille matière et le preneur s'engage notamment à : 
+					-ne destiner les lieux qu'à l'habitation sans occasionner de troubles de voisinage (bruits, odeurs, fumées, lumières, etc.) 
+					-ne céder ou sous-louer en aucun cas la présente location, même à titre gracieux, sauf accord écrit du bailleur ; 
+					-ne modifier en rien ni les lieux, ni la disposition des meubles ; 
+					-autoriser le bailleur à effectuer toutes réparations dont l'urgence et la nécessité apparaîtraient pendant la location et ceci sans prétendre à une indemnité ou à une réduction de loyer.
+					• Clause résolutoire A défaut de paiement aux échéances fixées ou en cas d'inexécution d'une des clauses du présent engagement, et CINQ JOURS francs après une simple sommation par lettre recommandée restée infructueuse, le présent contrat sera immédiatement résilié et le bailleur pourra se prévaloir de l'article 1590 du Code civil pour conserver les arrhes versées à titre des premiers dommages-intérêts.
+					• Clause pénale Il est convenu qu'en cas de désistement : 
+					-Le bailleur sera tenu de verser, dans les sept jours suivant le désistement, le double des arrhes au locataire. 
+					-Le locataire perdra les arrhes s'il se désiste plus de trois semaines avant la prise d'effet du bail ; s'il se désiste moins de trois semaines avant la prise d'effet du bail, il versera, en outre, au propriétaire, la différence entre les arrhes et l'équivalent du loyer total, à titre de clause pénale.
+					
+					 
+					
+					Termes et Conditions Service Internet.
+					
+					En utilisant le service Internet mis à disposition à votre contre de location, ou tout autre site accessible via un lien qui soit propriété de Locasejours.com (ci-après le « site »), l’utilisateur (ci-après « Utilisateur » ou « Utilisateurs » le cas échéant) accepte sans restrictions, réserves ou modifications les Termes et Conditions d’Utilisation. (Ci-après « Termes et Conditions »).
+					
+					L’utilisateur déclare posséder la capacité juridique pour opérer et n’avoir aucun obstacle selon les lois ou juridictions applicables et s’engage à utiliser le site web à des fins licites.
+					
+					Les Termes et Conditions pourront être modifiés sans préavis à l’Utilisateur ou toute autre personne ou entité. Pour cette raison, Locasejours.com suggère une révision périodique de ces Termes et Conditions chaque fois que vous accédez au site web.
+					L’accès au site web implique l’acceptation et la connaissance des Termes et Conditions de la part de l’Utilisateur.
+				</p>
+            </div>
+            
+        </div>
+    </div>
+    
+
+    
+    <div class="footer-top-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-about-us">
+                        <h2>e<span>Rent a flat</span></h2>
+                        <p>Louez facilement un logement où vous voulez.
+                        	Contactez directement l'annonceur.
+                        	Louer un logement n'a jamais été aussi simple
+                        	</p>
+                        <div class="footer-social">
+                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">User Navigation </h2>
+                        <ul>
+							<li sec:authorize="hasAuthority('ROLE_ADMIN')"><i class="fa fa-user"></i> Connexion administrateur</li>
+							<li sec:authorize="hasAuthority('ROLE_USER')"><i class="fa fa-user"></i> Connexion utilisateur</li>
+							<li  sec:authorize="isAuthenticated()">
+								<span th:inline="text">
+									Bonjour [[${#httpServletRequest.remoteUser}]]! 
+		                		</span>
+		                	</li>
+
+							<li th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}">
+							  <span th:case="${false}"><a th:href="@{'/login'}"><i class="fa fa-user"></i> Connexion</a></span>
+							  <p th:case="${true}">
+								  <form th:action="@{/logout}" method="post">
+								    <input type="hidden" th:name="${_csrf.parameterName}"
+										   th:value="${_csrf.token}" />
+						            <input type="submit" value="Déconnexion"/>
+						          </form>
+					          </p>
+							  <span th:case="*">Should never happen, but who knows...</span>
+							</li>
+	
+							<li><a th:href="@{'/register'}"><i class="fa fa-user"></i> Inscription</a></li>
+                        </ul>                      
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Catégories</h2>
+	                    <ul>
+	                        <li><a th:href="@{'/index'}">Accueil</a></li>
+							<li><a th:href="@{'/apropos'}">A propos</a></li>
+							<li><a th:href="@{'/proposerlog'}">Déposer une annonce</a></li>
+							<li><a th:href="@{'/location'}">Nos produits</a></li>
+							<li><a th:href="@{'/contact'}">Contact</a></li>
+	                    </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-newsletter">
+                        <h2 class="footer-wid-title">Newsletter</h2>
+                        <p>Inscrivez-vous à notre Newsletter 
+                        	pour vous tenir informé des dernières informations
+                        	de <b>rent-a-flat.fr</b> directement à votre adresse e-mail !</p>
+                        
+                        <div th:if="${param.error}">
+				        	Vous êtes déjà inscris à notre newsletter.
+				        </div>
+                        
+                        <div class="newsletter-form">
+                            <form th:action="@{/newsletter}" method="POST">
+                                <input type="email" placeholder="Votre e-mail"
+	                        		   th:name="email_n" 
+	                        		   th:value="*{email_n}" 
+	                        		   th:id="email_n" required="required" />
+										
+                                <input type="submit" value="Inscription"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End footer top area -->
+    
+    <div class="footer-bottom-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="copyright">
+                        <p>&copy; 2016 - Rent A Flat -  All Rights Reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End footer bottom area -->
+   
+
+    
+    <!-- jQuery sticky menu -->
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+    
+    <!-- jQuery easing -->
+    <script src="js/jquery.easing.1.3.min.js"></script>
+    
+    <!-- Main Script -->
+    <script src="js/main.js"></script>
+    
+  </body>
+</html>

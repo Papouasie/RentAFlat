@@ -1,0 +1,504 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Rent A Flat | Détails</title>
+    
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'/>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'/>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'/>
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/owl.carousel.css"/>
+    <link rel="stylesheet" href="../css/style.css"/>
+    <link rel="stylesheet" href="../css/responsive.css"/>
+    
+    <!-- Latest jQuery form server -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    
+    <!-- Bootstrap JS form CDN -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+		<link href="../css/style.css" rel="stylesheet" type="text/css"  media="all" />
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+		<link href="../css/slider.css" rel="stylesheet" type="text/css"  media="all" />
+		<link rel="stylesheet" type="text/css" href="../css/lightbox.css" media="screen" />
+		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1200);
+				});
+			});
+		</script>
+		
+		<script type="text/javascript" src="../js/jquery.lightbox.js"></script>
+	    
+	  	<!-- <script type="text/javascript">
+	    $(function() {
+	        $('.gallery-grid a').lightBox();
+	    });
+	    </script>-->
+	    
+	    <!-- DATA TABLES -->
+		<link rel="stylesheet" type="text/css" href="../css/jquery-ui.css" />
+		<script type='text/javascript' src='../js/jquery-1.11.1.min.js'></script>
+		<script type='text/javascript' src='../js/jquery.dataTables.min.js'></script>
+
+	
+  </head>
+  <body>
+   
+    <div class="header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="user-menu">
+                        <ul>
+							<li class="dropdown dropdown-small" 
+                        		th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}">
+								  <span th:case="${false}">
+								  		<a th:href="@{'/register'}"><i class="fa fa-user"></i> Inscription</a>
+								  </span>
+								  <span th:case="${true}" sec:authorize="hasAuthority('ROLE_ADMIN')">
+								  <br/><i class="fa fa-user"></i> Connexion administrateur</span>
+								  <span th:case="${true}" sec:authorize="hasAuthority('ROLE_USER')">
+								  <br/><i class="fa fa-user"></i> Connexion utilisateur</span>
+							</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="header-right">
+                        <ul class="list-unstyled list-inline">
+                        	<li class="dropdown dropdown-small" 
+                        		th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}">
+								  <span th:case="${false}">
+								  	<a th:href="@{'/login'}">
+								  		<i class="fa fa-user"></i> Connexion
+								  	</a>
+								  </span>
+								  <p th:case="${true}">
+									  <form th:action="@{/logout}" method="post">
+									  	<span th:inline="text" sec:authorize="isAuthenticated()">
+											Bonjour [[${#httpServletRequest.remoteUser}]]! 
+				                		</span>
+									    <input type="hidden" th:name="${_csrf.parameterName}"
+											   th:value="${_csrf.token}" />
+							            <input type="submit" value="Déconnexion"/>
+							          </form>
+						          </p>
+								  <span th:case="*">Should never happen, but who knows...</span>
+							</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End header area -->
+    
+    <div class="site-branding-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="logo">
+                        <h1><a href="index.html">Rent <span>A Flat</span></a></h1>
+                    </div>
+                </div>
+                
+                <div class="col-sm-6">
+                    
+                </div>
+            </div>
+        </div>
+    </div> <!-- End site branding area -->
+    
+     <div class="mainmenu-area">
+        <div class="container">
+            <div class="row">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div> 
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a th:href="@{'/index'}">Accueil</a></li>
+						<li><a th:href="@{'/apropos'}">A propos</a></li>
+						<li><a th:href="@{'/proposerlog'}">Déposer une annonce</a></li>
+						<li class="active"><a th:href="@{'/location'}">Nos produits à la location</a></li>
+						<li><a th:href="@{'/contact'}">Contact</a></li>
+						<li sec:authorize="isAuthenticated()">
+							<a th:href="@{'/espacemembre'}" sec:authorize="hasAuthority('ROLE_USER')">Espace membre</a>
+							<a th:href="@{'/espaceadmin'}" sec:authorize="hasAuthority('ROLE_ADMIN')">Espace admin</a>
+						</li>
+                    </ul>
+                </div>  
+            </div>
+        </div>
+    </div> <!-- End mainmenu area -->
+    
+   <div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>Détails du logement</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4" th:each="logement : ${selectedLogement}">
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Logement proposé par :</h2>
+			    	 	<p th:text="${logement.l_nameL}"></p>
+			    	 	<p th:text="${logement.l_surnameL}"></p>
+			    	 	<p th:text="${logement.l_emailL}"></p>
+			    	 	
+			    	 	<h2>Adresse du logement</h2>
+			    	 	<p th:text="${logement.l_adresse}"></p>
+			    	 	
+			    	 	<p th:text="${logement.l_CP}"></p>
+			    	 	  <p th:text="${logement.l_ville}"></p>
+			    	 	  <p th:text="${logement.l_quarter}"></p>
+                    </div>
+                    
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Ce logement vous intéresse ?</h2>
+			    	 	<p>Afin de fixer un RDV pour une visite, ou de poser simplement une question,
+			    	 	contactez l'annonceur par email via ce formulaire :</p>
+						<table class="table_annonce">
+							<tr>
+								<td class="contact_annonce">
+									<form th:object="${demande}" method="POST">
+                                            <div class="shipping_address" style="display: block;">
+                                             <p id="shipping_first_name_field" class="form-row form-row-first validate-required">
+                                                 <label class="" for="shipping_first_name">Nom <abbr title="required" class="required">*</abbr>
+                                                 </label>
+                                                 <input type="text" value="" placeholder="Nom" 
+                                                  id="shipping_first_name" 
+                                                  name="shipping_first_name" class="input-text "
+											      th:field="*{contactName}" />
+                                             </p>
+
+                                             <p id="shipping_last_name_field" class="form-row form-row-last validate-required">
+                                                 <label class="" for="shipping_last_name">Adresse e-mail <abbr title="required" class="required">*</abbr>
+                                                 </label>
+                                                 <input type="text" value="" placeholder="Adresse e-mail" 
+                                                     id="shipping_last_name" 
+                                                     name="shipping_last_name" class="input-text "
+                                                     th:field="*{contactMail}"/>
+                                             </p>
+                                             <div class="clear"></div>
+
+                                             <p id="shipping_company_field" class="form-row form-row-wide">
+                                                 <label class="" for="shipping_company">Numéro de téléphone</label>
+                                                 <input type="text" value="" placeholder="N° de téléphone" 
+                                                     id="shipping_company" 
+                                                     name="shipping_company" class="input-text "
+                                                     th:field="*{contactTel}" />
+                                             </p>
+                                             <div class="clear"></div>
+
+                                            </div>
+
+                                            <p id="order_comments_field" class="form-row notes">
+                                                <label class="" for="order_comments">Votre message</label><br/>
+                                                <textarea cols="43" rows="10" 
+		                                                  placeholder="Bonjour,
+													
+															J’ai vu votre annonce sur rent-a-flat.fr.
+															Je souhaiterais obtenir des informations complémentaires
+															 sur ce bien et, éventuellement, convenir d’un
+															  rendez-vous pour une visite.
+															
+															Merci, par avance, de bien vouloir me contacter dès que possible.
+															
+															Cordialement," 
+		                                                  id="order_comments" class="input-text " 
+		                                                  name="order_comments"
+		                                                  th:field="*{contactMsg}">
+		                                         </textarea>
+                                            </p>
+                                            <input type="hidden" th:value="${logement.l_id}" 
+												   th:name="l_id" th:id="l_id" />
+										   <input type="hidden" th:value="${logement.l_emailL}" 
+												   th:name="l_emailL" th:id="l_emailL" />
+										   <input type="hidden" th:name="${_csrf.parameterName}"
+												  th:value="${_csrf.token}" />
+									   		<span><input type="submit" 
+									   					 value="Envoyer ma demande de réservation" 
+									   					 class="button"/></span>
+								    </form>
+								</td>
+							</tr>
+						</table>
+                    </div>
+                </div>
+                
+                <div class="col-md-8">
+                    <div class="product-content-right">
+                        <div class="woocommerce" th:each="logement : ${selectedLogement}">
+                            <form th:object="${logements}" method="POST" class="form-horizontal" enctype="multipart/form-data">
+
+	                            <h3>Description</h3>
+								<table class="table_annonce">
+									<thead>
+										<tr>
+											<td class='titre_annonce' th:text="${logement.l_title}"></td>
+											<td class='prix_annonce' th:text="${logement.l_price}"></td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td class='sstitre_annonce' th:text="${logement.l_quarter}"></td>
+											<td class='frais_annonce'>(Hors frais)</td>
+										</tr>
+									</tbody>
+								</table>
+					
+								<p>
+									<br/>
+									<img alt="APPART" 
+					            		 th:src="'../'+${logement.l_img}"
+					            		 width='280px;' height='210px;' />
+					            	<br/>
+								</p>
+							  	
+							  	<p class="description" th:text="${logement.l_description}">
+									Quai Mullenheim, au calme dans la verdure, 
+									à proximité des institutions européennes 
+									et du centre-ville, beau 2 pièces avec magnifique
+									 jardin privatif récent à louer. Il se compose :
+									 - d'un séjour avec accès direct à la terrasse 
+									 sur jardin- d'une cuisine américaine équipée- 
+									 d'une chambre- d'une salle de bain- de toilettes
+									  séparées.En annexe un garage fermé. Mme Anne 
+									  PFEIFFER 06 81 52 49 40 / 03 727 35 727 poste 
+									  9146 strasbourg.est@maxihome.email Agent commercial
+									   indépendant du réseau national clairimmo Maxihome
+									    N° RSAC : 438894081 - Ville du greffe : RSAC STRASBOURG 
+								</p>
+								<p>Référence annonce AVENDREALOUER : 69707MX1146</p>
+								
+								<h3>Caractéristiques</h3>
+								<p>
+									<table class="table">
+										<thead>
+											<tr>
+												<td cols="2"></td>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Référence :</td>
+												<td th:text="${logement.l_reference}"></td>
+											</tr>
+											<tr>
+												<td>Date de parution :</td>
+												<td th:text="${logement.l_parution}"></td>
+											</tr>
+											<tr>
+												<td>Pièce(s) :</td>
+												<td th:text="${logement.l_pieces}"></td>
+											</tr>
+											<tr>
+												<td>Loyer mensuel :</td>
+												<td th:text="${logement.l_price}"></td>
+											</tr>
+											<tr>
+												<td>Montant des charges :</td>
+												<td th:text="${logement.l_charges}"></td>
+											</tr>
+											<tr>
+												<td>Ascenseur :</td>
+												<td th:text="${logement.l_ascence}"></td>
+											</tr>
+											<tr>
+												<td>Terrasse : </td>
+												<td th:text="${logement.l_terrasse}"></td>
+											</tr>
+											<tr>
+												<td>Surface : </td>
+												<td th:text="${logement.l_surface}">58 m²</td>
+											</tr>
+											<tr>
+												<td>Mandat : </td>
+												<td th:text="${logement.l_mandat}">Exclusif</td>
+											</tr>
+											<tr>
+												<td>Toilettes : </td>
+												<td th:text="${logement.l_wc}">1</td>
+											</tr>
+											<tr>
+												<td>Salle de bain : </td>
+												<td th:text="${logement.l_sdb}">1</td>
+											</tr>
+											<tr>
+												<td>Construit le : </td>
+												<td th:text="${logement.l_build}">01/01/2003</td>
+											</tr>
+											<tr>
+												<td>Chauffage : </td>
+												<td th:text="${logement.l_chauffage}">Gaz</td>
+											</tr>
+										</tbody>
+									</table>				
+								</p>		
+	                                        
+	                                        <div class="clear"></div>
+
+                                        
+
+                            </form>
+
+                        </div>                       
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <div class="footer-top-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-about-us">
+                        <h2>e<span>Rent a flat</span></h2>
+                        <p>Louez facilement un logement où vous voulez.
+                        	Contactez directement l'annonceur.
+                        	Louer un logement n'a jamais été aussi simple
+                        	</p>
+                        <div class="footer-social">
+                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">User Navigation </h2>
+                        <ul>
+							<li sec:authorize="hasAuthority('ROLE_ADMIN')"><i class="fa fa-user"></i> Connexion administrateur</li>
+							<li sec:authorize="hasAuthority('ROLE_USER')"><i class="fa fa-user"></i> Connexion utilisateur</li>
+							<li  sec:authorize="isAuthenticated()">
+								<span th:inline="text">
+									Bonjour [[${#httpServletRequest.remoteUser}]]! 
+		                		</span>
+		                	</li>
+
+							<li th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}">
+							  <span th:case="${false}"><a th:href="@{'/login'}"><i class="fa fa-user"></i> Connexion</a></span>
+							  <p th:case="${true}">
+								  <form th:action="@{/logout}" method="post">
+								    <input type="hidden" th:name="${_csrf.parameterName}"
+										   th:value="${_csrf.token}" />
+						            <input type="submit" value="Déconnexion"/>
+						          </form>
+					          </p>
+							  <span th:case="*">Should never happen, but who knows...</span>
+							</li>
+	
+							<li><a th:href="@{'/register'}"><i class="fa fa-user"></i> Inscription</a></li>
+                        </ul>                      
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Catégories</h2>
+	                    <ul>
+	                        <li><a th:href="@{'/index'}">Accueil</a></li>
+							<li><a th:href="@{'/apropos'}">A propos</a></li>
+							<li><a th:href="@{'/proposerlog'}">Déposer une annonce</a></li>
+							<li><a th:href="@{'/location'}">Nos produits</a></li>
+							<li><a th:href="@{'/contact'}">Contact</a></li>
+	                    </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-newsletter">
+                        <h2 class="footer-wid-title">Newsletter</h2>
+                        <p>Inscrivez-vous à notre Newsletter 
+                        	pour vous tenir informé des dernières informations
+                        	de <b>rent-a-flat.fr</b> directement à votre adresse e-mail !</p>
+                        
+                        <div th:if="${param.error}">
+				        	Vous êtes déjà inscris à notre newsletter.
+				        </div>
+                        
+                        <div class="newsletter-form">
+                            <form th:action="@{/newsletter}" method="POST">
+                                <input type="email" placeholder="Votre e-mail"
+	                        		   th:name="email_n" 
+	                        		   th:value="*{email_n}" 
+	                        		   th:id="email_n" required="required" />
+										
+                                <input type="submit" value="Inscription"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End footer top area -->
+    
+    <div class="footer-bottom-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="copyright">
+                        <p>&copy; 2016 - Rent A Flat -  All Rights Reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End footer bottom area -->
+   
+
+    
+    <!-- jQuery sticky menu -->
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/jquery.sticky.js"></script>
+    
+    <!-- jQuery easing -->
+    <script src="../js/jquery.easing.1.3.min.js"></script>
+    
+    <!-- Main Script -->
+    <script src="../js/main.js"></script>
+    
+  </body>
+</html>
